@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
-import { site } from "@/content/site";
+import { IS_OFFICIAL_SITE, SITE_URL } from "@/i18n/config";
 
 export default function robots(): MetadataRoute.Robots {
+  if (!IS_OFFICIAL_SITE) return { rules: { userAgent: "*", disallow: "/" } };
   return {
     rules: { userAgent: "*", allow: "/", disallow: "/api/" },
-    sitemap: `${site.url}/sitemap.xml`,
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

@@ -4,7 +4,18 @@ export const locales = ["en", "fr"] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = "en";
 
-export const SITE_URL = "https://loamics.com";
+const OFFICIAL_URL = "https://loamics.com";
+
+/**
+ * Absolute base for canonical URLs, sitemap and social images.
+ * On Vercel it follows the deployment's production domain; NEXT_PUBLIC_SITE_URL overrides it.
+ */
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : OFFICIAL_URL);
+
+/** Anything but the official domain is a showcase deployment and must not compete in search. */
+export const IS_OFFICIAL_SITE = SITE_URL === OFFICIAL_URL;
 
 /**
  * One table for every localized URL. English keeps the historical paths;

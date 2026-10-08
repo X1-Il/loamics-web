@@ -5,7 +5,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { CommandPalette } from "./CommandPalette";
 import { I18nProvider } from "@/i18n/client";
-import { SITE_URL, type Locale } from "@/i18n/config";
+import { IS_OFFICIAL_SITE, SITE_URL, type Locale } from "@/i18n/config";
 import { getContent, getUi } from "@/i18n/server";
 import { site } from "@/content/site";
 import "@/app/globals.css";
@@ -27,6 +27,7 @@ export function rootMetadata(locale: Locale): Metadata {
       alternateLocale: locale === "en" ? "fr_FR" : "en_US",
     },
     twitter: { card: "summary_large_image", site: "@loamics" },
+    ...(IS_OFFICIAL_SITE ? {} : { robots: { index: false, follow: false } }),
   };
 }
 
